@@ -1,4 +1,4 @@
-package com.mashibing.apipassenger;
+package com.mashibing.serviceverification;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-// 这个注解说明是启动类
-public class ApiPassengerApplication {
+public class ServiceVerificationcodeApplication {
     public static void main(String[] args) {
-
-        SpringApplication.run(ApiPassengerApplication.class);
+        SpringApplication.run(ServiceVerificationcodeApplication.class);
     }
+
 }

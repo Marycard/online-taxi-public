@@ -12,6 +12,12 @@ public class ResponseResult<T> {
     private String message;
     private T data;
 
+
+    //再定义一个默认值的success返回对象
+    public static <T> ResponseResult success() {
+        return new ResponseResult().setCode(CommonStatusEnum.SUCCESS.getCode()).setMessage(CommonStatusEnum.SUCCESS.getMessage()).setData(null);
+    }
+
     public static <T> ResponseResult success(T data) {
         return new ResponseResult().setCode(CommonStatusEnum.SUCCESS.getCode()).setMessage(CommonStatusEnum.SUCCESS.getMessage()).setData(data);
     }

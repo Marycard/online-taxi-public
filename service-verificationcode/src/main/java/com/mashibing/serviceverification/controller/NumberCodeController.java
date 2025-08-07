@@ -15,7 +15,7 @@ public class NumberCodeController {
      * 使用@PathVariable，读取路径中的参数
      */
     public ResponseResult numberCode(@PathVariable("size") int size) {
-        System.out.println("size" + size);
+        System.out.println("size: " + size);
 
         //生成验证码
         double mathRandom = (Math.random() * 10 + 1) * Math.pow(10, size-1);

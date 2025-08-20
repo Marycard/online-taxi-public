@@ -18,6 +18,7 @@
         <module>api-passenger</module>
         <module>service-verificationcode</module>
         <module>internal-common</module>
+        <module>service-passenger-user</module>
     </modules>
 
     <properties>
@@ -59,6 +60,8 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 

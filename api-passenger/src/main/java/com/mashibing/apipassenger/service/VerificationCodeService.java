@@ -5,7 +5,9 @@ import com.mashibing.apipassenger.remote.ServiceVerificationClient;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import com.mashibing.internalcommon.response.NumberCodeResponse;
 import com.mashibing.internalcommon.response.TokenResponse;
+import io.netty.util.internal.StringUtil;
 import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,9 @@ public class VerificationCodeService {
 
     private static final String api_passenger_prefix = "api-passenger";
 
+    public static String generateKeyByPhone(String passenger) {
+        return api_passenger_prefix + passenger;
+    }
 
     //实现一个方法，根据手机号调用“验证码服务”，并获取返回的验证码，存入redis
     public ResponseResult generateCode(String passengerPhone){
@@ -34,7 +39,7 @@ public class VerificationCodeService {
 
         System.out.println("存入redis");
         //redis需要key，value(就是验证码)和过期时间
-        String key = api_passenger_prefix + passengerPhone;
+        String key = generateKeyByPhone(passengerPhone);
         stringRedisTemplate.opsForValue().set(key, String.valueOf(numberCode), 2, TimeUnit.MINUTES);
 
         /**
@@ -52,9 +57,21 @@ public class VerificationCodeService {
 
     public ResponseResult checkCode(String passengerPhone, String verificationCode){
 
-        System.out.println("验证验证码");
+        //获取验证码
+        String key = generateKeyByPhone(passengerPhone);
+        String codeRedis = stringRedisTemplate.opsForValue().get(key);
+        System.out.println("获取的验证码: "+codeRedis);
 
-        System.out.println("验证码有效，进入登录页面");
+        //验证验证码：为空已过期；输入不正确
+        if (StringUtils.isBlank(codeRedis)) {
+            return ResponseResult.fail("验证码已过期");
+        }
+        if (!verificationCode.trim().equals(codeRedis.trim())) {
+            return ResponseResult.fail("验证码不正确");
+        }
+
+        System.out.println("判断原来是否有该用户，并作进一步处理");
+
 
         System.out.println("颁发token");
 

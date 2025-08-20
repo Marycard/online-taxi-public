@@ -1,6 +1,6 @@
-package com.mashibing.apipassenger.request;
+package com.mashibing.internalcommon.dto;
 
-public class VerificationCodeCheckDTO {
+public class VerificationCodeDTO {
     private String passengerPhone;
     private String verificationCode;
 

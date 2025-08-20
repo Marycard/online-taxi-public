@@ -38,8 +38,11 @@ public class ResponseResult<T> {
         return new ResponseResult().setCode(code).setMessage(message).setData(data);
     }
 
-    public static <T> ResponseResult fail() {
-        return new ResponseResult();
+    public static <T> ResponseResult fail(T data) {
+
+        return new ResponseResult().setCode(CommonStatusEnum.FAIL.getCode()).setMessage(CommonStatusEnum.FAIL.getMessage()).setData(data);
     }
+
+
 
 }
